@@ -1,6 +1,8 @@
 #include "game.h"
 #include <raylib.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // Generate a random position on the grid based on cell size and grid dimensions
 Vector2 getPosition(int cellSize, int cols, int rows) {
@@ -27,6 +29,19 @@ bool borderCollision(Node *head, int screenWidth, int screenHeight,
 bool foodCollision(Node *head, Rectangle *rect) {
     if (CheckCollisionRecs(head->rect, *rect)) {
         return true;
+    }
+    return false;
+}
+
+// check Body Collisions
+bool bodyCollision(Node *head) {
+    Node *helpptr = head;
+    helpptr = helpptr->next;
+    while (helpptr->next != NULL) {
+        if (CheckCollisionRecs(head->rect, helpptr->rect)) {
+            return true;
+        }
+        helpptr = helpptr->next;
     }
     return false;
 }

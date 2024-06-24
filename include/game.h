@@ -12,4 +12,8 @@ bool borderCollision(Node *head, int screenWidth, int screenHeight,
 
 // check Food Collision
 bool foodCollision(Node *head, Rectangle *rect);
+
+// check Body Collision
+bool bodyCollision(Node *head);
+
 #endif
