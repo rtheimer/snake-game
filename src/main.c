@@ -90,7 +90,8 @@ int main(void) {
         EndDrawing();
 
         // check for collisions
-        if (borderCollision(snake.head, screenWidth, screenHeight, cellSize)) {
+        if (borderCollision(snake.head, screenWidth, screenHeight, cellSize) ||
+            bodyCollision(snake.head)) {
             deleteSnake(snake.head);
             snake.head = NULL;
             snake.direction = RIGHT;
