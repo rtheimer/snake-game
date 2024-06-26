@@ -15,20 +15,22 @@ int main(void) {
     // Set the game to run at 60 frames-per-second
     SetTargetFPS(60);
 
-    // Set initial positions for the snake's head and the food
+    // Set initial position for the snake's
     headPosition = getPosition(cellSize, columns - 10, rows);
-    foodPosition = getPosition(cellSize, columns, rows);
-
-    Rectangle *rect = createFood(foodPosition, cellSize);
-
-    // check that foodPosition is not in the same row like headPosition
-    while (foodPosition.y == headPosition.y) {
-        foodPosition = getPosition(cellSize, columns, rows);
-    }
 
     // Create the initial snake nodes
     buildSnake(&snake.head, initialSnakeLength, &headPosition, cellSize);
 
+    // create the food
+    foodPosition = getPosition(cellSize, columns, rows);
+    Rectangle *rect = createFood(foodPosition, cellSize);
+
+    // check that foodPosition is not on the Snake else recreate
+    while (foodOnSnake(snake.head, rect)) {
+        free(rect);
+        foodPosition = getPosition(cellSize, columns, rows);
+        rect = createFood(foodPosition, cellSize);
+    }
     // for debugging
     // printNode(snake.head);
 
@@ -104,6 +106,12 @@ int main(void) {
             free(rect);
             foodPosition = getPosition(cellSize, columns, rows);
             rect = createFood(foodPosition, cellSize);
+            // check that foodPosition is not on the Snake else recreate
+            while (foodOnSnake(snake.head, rect)) {
+                free(rect);
+                foodPosition = getPosition(cellSize, columns, rows);
+                rect = createFood(foodPosition, cellSize);
+            }
             addBodyNode(snake.head, cellSize);
         }
     }

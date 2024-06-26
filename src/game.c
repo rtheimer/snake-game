@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Generate a random position on the grid based on cell size and grid dimensions
 Vector2 getPosition(int cellSize, int cols, int rows) {
@@ -39,6 +40,18 @@ bool bodyCollision(Node *head) {
     helpptr = helpptr->next;
     while (helpptr->next != NULL) {
         if (CheckCollisionRecs(head->rect, helpptr->rect)) {
+            return true;
+        }
+        helpptr = helpptr->next;
+    }
+    return false;
+}
+
+// Food placed on Snake
+bool foodOnSnake(Node *head, Rectangle *rect) {
+    Node *helpptr = head;
+    while (helpptr->next != NULL) {
+        if (CheckCollisionRecs(helpptr->rect, *rect)) {
             return true;
         }
         helpptr = helpptr->next;
