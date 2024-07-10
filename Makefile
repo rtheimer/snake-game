@@ -26,12 +26,16 @@ $(TARGET): $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 # Compile each .c file into an .o object file in the 'build' directory
-build/%.o: src/%.c
+build/%.o: src/%.c | build
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+# Ensure the build directory exists
+build:
+	mkdir -p build
 
 # Clean up build files
 clean:
-	rm -rf build/*.o $(TARGET)
+	rm -rf build $(TARGET)
 
 # Declare 'all' and 'clean' as phony targets (they do not correspond to actual files)
 .PHONY: all clean
