@@ -2,6 +2,7 @@
 #include "game.h"
 #include "settings.h"
 #include "snake.h"
+#include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -14,6 +15,9 @@ int main(void) {
 
     // Set the game to run at 60 frames-per-second
     SetTargetFPS(60);
+
+    // hide the cursor
+    HideCursor();
 
     // Set initial position for the snake's
     headPosition = getPosition(cellSize, columns - 10, rows);
